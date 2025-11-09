@@ -14,24 +14,20 @@ export default function Home() {
 
   const getAllProducts = async () => {
   try {
-      const response = await fetch("https://dummyjson.com/products");
-      if (!response.ok) throw new Error("Failed to fetch products");
+    const response = await fetch("https://dummyjson.com/products");
+    if (!response.ok) throw new Error("Failed to fetch products");
 
-      const allProduct = await response.json();
-      setProducts(allProduct.products);
-      setFiltersProduct(allProduct.products);
-      console.log('-allProducts-' , allProduct.products , allProduct.limit);
-
-    } catch (error) {
-      setProducts([]);
-      setFiltersProduct([]);
-      console.error("Error fetching products:", error);
+    const allProduct = await response.json();
+    setProducts(allProduct.products);
+    setFiltersProduct(allProduct.products);
+    console.log('-allProducts-' , allProduct.products , allProduct.limit);
+  } catch (error) {
+    setProducts([]);
+    setFiltersProduct([]);
+    console.error("Error fetching products:", error);
   }
   
 };
-
-console.log('-products-' , products);
-console.log('-filtersProduct-' , filtersProduct);
 
   useEffect(() => {
     getAllProducts();

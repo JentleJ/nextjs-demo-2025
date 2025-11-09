@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { button } from "reactstrap";
+import { useRouter} from "next/router";
 function formatStars(score) {
   if (!score) score = 0;
 
@@ -17,10 +18,11 @@ function formatStars(score) {
 
 export default function ProductDetail() {
   const params = useParams();
+  const router = useRouter
   const productId = params.id;
   const [product, setProduct] = useState({});
 
-  const getProductById = async (id) => {
+  const getProductById = async () => {
     try {
       const response = await fetch(`https://dummyjson.com/products/${productId}`);
       const data = await response.json();
@@ -36,6 +38,7 @@ export default function ProductDetail() {
   useEffect(() => {
     getProductById();
   }, []);
+  
   return (
     <div className="flex flex-column h-auto justify-center gap-4 m-auto p-[1rem] max-w-[600px]">
 
@@ -70,7 +73,7 @@ export default function ProductDetail() {
       </div>
       <div className="flex justify-center w-full">
         <button className="bg-blue-500 text-white py-2 px-20 rounded mt-4"
-          onClick={() => window.history.back()}
+          onClick={() => router.push('/')}
         >Back</button>
       </div>
     </div>
