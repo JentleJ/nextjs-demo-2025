@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { button } from "reactstrap";
-import { useRouter} from "next/router";
+import { useRouter} from "next/navigation";
+
 function formatStars(score) {
   if (!score) score = 0;
 
@@ -18,7 +19,7 @@ function formatStars(score) {
 
 export default function ProductDetail() {
   const params = useParams();
-  const router = useRouter
+  const router = useRouter();
   const productId = params.id;
   const [product, setProduct] = useState({});
 
@@ -33,8 +34,6 @@ export default function ProductDetail() {
     }
   };
 
-  console.log('-product-', product);
-
   useEffect(() => {
     getProductById();
   }, []);
@@ -44,14 +43,13 @@ export default function ProductDetail() {
 
       <p className="text-2xl font-bold text-center">Details</p>
       <div
-        key={productId}
         className="flex flex-column items-center">
         <img src={product.thumbnail} alt={product.title} className="h-[200px]" />
         <p className="text-[24px] text-center font-bold">{product.title}</p>
         <p className="text-[16px] text-center">Description: {product.description}</p>
         <p className="text-[18px] text-center">Price: ${product.price}</p>
 
-        {(Array.isArray(product.reviews) && product.reviews.length > 0 && (
+        {(Array.isArray(product.reviews) && product.reviews.length > 0) && (
           <div className="w-full">
             <p className="text-xl font-semibold">Reviews:</p>
             <div className="flex flex-col gap-3 mt-2">
@@ -62,14 +60,14 @@ export default function ProductDetail() {
                     <span className="text-yellow-500 text-[16px] text-sm">{formatStars(item.rating)} ({item.rating})</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[14px] italic mt-0.5 ">"{item.comment}"</span>
-                    <span className="text-[12px] text-gray-500 mt-10 ">{new Date(item.date).toLocaleDateString()}</span>
+                    <span className="text-[14px] italic mt-1">{item.comment}</span>
+                    <span className="text-[12px] text-gray-500 mt-10">{new Date(item.date).toLocaleDateString()}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        ))}
+        )}
       </div>
       <div className="flex justify-center w-full">
         <button className="bg-blue-500 text-white py-2 px-20 rounded mt-4"
